@@ -1,0 +1,293 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Getting Started                                           </title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="01_getting_started.html" class="active"><strong aria-hidden="true">1.</strong> Getting Started                                           </a></li><li class="chapter-item expanded "><a href="02_programming_a_guessing_game.html"><strong aria-hidden="true">2.</strong> Programming A Guessing Game                               </a></li><li class="chapter-item expanded "><a href="03_common_programming_concepts.html"><strong aria-hidden="true">3.</strong> Common Programming Concepts                               </a></li><li class="chapter-item expanded "><a href="04_understanding_ownership.html"><strong aria-hidden="true">4.</strong> Understanding Ownership                                   </a></li><li class="chapter-item expanded "><a href="05_using_structs_to_structure_related_data.html"><strong aria-hidden="true">5.</strong> Using Structs To Structure Related Data                   </a></li><li class="chapter-item expanded "><a href="06_enums_and_pattern_matching.html"><strong aria-hidden="true">6.</strong> Enums And Pattern Matching                                </a></li><li class="chapter-item expanded "><a href="07_managing_growing_projects_with_packages_crates_and_modules.html"><strong aria-hidden="true">7.</strong> Managing Growing Projects With Packages Crates And Modules</a></li><li class="chapter-item expanded "><a href="08_common_collections.html"><strong aria-hidden="true">8.</strong> Common Collections                                        </a></li><li class="chapter-item expanded "><a href="09_error_handling.html"><strong aria-hidden="true">9.</strong> Error Handling                                            </a></li><li class="chapter-item expanded "><a href="10_generic_types_traits_and_lifetimes.html"><strong aria-hidden="true">10.</strong> Generic Types Traits And Lifetimes                        </a></li><li class="chapter-item expanded "><a href="11_writing_automated_tests.html"><strong aria-hidden="true">11.</strong> Writing Automated Tests                                   </a></li><li class="chapter-item expanded "><a href="12_an_io_project.html"><strong aria-hidden="true">12.</strong> An Io Project                                             </a></li><li class="chapter-item expanded "><a href="13_functional_language_features.html"><strong aria-hidden="true">13.</strong> Functional Language Features                              </a></li><li class="chapter-item expanded "><a href="14_more_about_cargo_and_crates.io.html"><strong aria-hidden="true">14.</strong> More About Cargo And Crates.io                            </a></li><li class="chapter-item expanded "><a href="15_smart_pointers.html"><strong aria-hidden="true">15.</strong> Smart Pointers                                            </a></li><li class="chapter-item expanded "><a href="16_fearless_concurrency.html"><strong aria-hidden="true">16.</strong> Fearless Concurrency                                      </a></li><li class="chapter-item expanded "><a href="17_object_oriented_programming_features_of_rust.html"><strong aria-hidden="true">17.</strong> Object Oriented Programming Features Of Rust              </a></li><li class="chapter-item expanded "><a href="18_patterns_and_matching.html"><strong aria-hidden="true">18.</strong> Patterns And Matching                                     </a></li><li class="chapter-item expanded "><a href="19_advanced_features.html"><strong aria-hidden="true">19.</strong> Advanced Features                                         </a></li><li class="chapter-item expanded "><a href="20_final_project.html"><strong aria-hidden="true">20.</strong> Final Project                                             </a></li><li class="chapter-item expanded "><a href="21_appendix.html"><strong aria-hidden="true">21.</strong> Appendix                                                  </a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h1>
+<h2 id="writing-a-program"><a class="header" href="#writing-a-program">Writing a program</a></h2>
+<p>This is how a &quot;Hello Ferris!&quot; program looks like in Rust:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    println!(&quot;Hello, Ferris!&quot;);
+}
+</code></pre></pre>
+<p>Create a file named &quot;hello.rs&quot; and then open your terminal in that directory. Now compile your program with <code>rustc hello.rs</code> and run it with <code>./hello</code>. It will output: <code>Hello, Ferris!</code>(<strong>Ferris</strong> is the Rust programming language's unofficial mascot).</p>
+<p style="text-align:center";>
+<img src="images/01/cuddlyferris.svg" alt="Ferris" width="200" style="center">
+</p>
+<ul>
+<li>
+<p>In our program:</p>
+<ul>
+<li>
+<p>we have the main function starting with <code>fn main() {</code> and ending at <code>}</code>. It takes no parameters, which is why the <code>()</code>(parentheses) are empty.</p>
+</li>
+<li>
+<p><code>println!</code> calls a Rust macro. If it had called a function instead, it would be entered as <code>println</code> (without the !).</p>
+</li>
+<li>
+<p>We pass this <code>&quot;Hello, Ferris!&quot;</code> as an argument to <code>println!</code>, and the string is printed to the screen.</p>
+</li>
+<li>
+<p><a href="https://doc.rust-lang.org/std/fmt/">Read about string formatting here</a></p>
+</li>
+<li>
+<p>We end the line with a semicolon (<code>;</code>), which indicates that this expression is over.</p>
+</li>
+<li>
+<p><strong>NOTE:</strong> <em>The order in which functions are written doesn't matter but macros have to appear before they are used.</em></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="cargo"><a class="header" href="#cargo">Cargo</a></h2>
+<p>Cargo is Rust's build system and package manager. We use it when we have to use any dependencies. Our previous program was simple so we did not need cargo.</p>
+<ul>
+<li>
+<p>Let's get familiar with cargo:</p>
+<ul>
+<li>First make sure that cargo is installed. Try running: <code>cargo --version</code></li>
+<li>Help: <code>cargo --help</code> or</li>
+<li>If manpages are installed: <code>man cargo</code></li>
+</ul>
+</li>
+<li>
+<p>Creating our first cargo project:</p>
+<ul>
+<li>
+<p>Run <code>cargo new hello_cargo</code>: This will create a new cargo project directory named <code>hello_cargo</code> which contains:</p>
+<ul>
+<li>&quot;<strong>Cargo.toml</strong>&quot; file is Cargo's configuration file written in TOML(Tom's Obvious, Minimal Language) format:</li>
+</ul>
+<pre><code class="language-toml">[package]
+name = &quot;hello_cargo&quot;
+version = &quot;0.1.0&quot;
+edition = &quot;2021&quot;
+
+[dependencies]
+</code></pre>
+<p>The first line, <strong>[package]</strong>, is a section heading that indicates that the following statements are configuring a package. As we add more information to this file, we’ll add other sections.</p>
+<p>The next three lines set the configuration information Cargo needs to compile your program: the name, the version, and the edition of Rust to use.</p>
+<p>The last line, <strong>[dependencies]</strong>, is the start of a section for you to list any of your project’s dependencies. In Rust, packages of code are referred to as crates. We won’t need any other crates for this project, but we will use it later.</p>
+<ul>
+<li>
+<p>&quot;<strong>Cargo.lock</strong>&quot; file keeps track of the exact versions of dependencies in your project. This project doesn’t have dependencies, so the file is a bit sparse. You won’t ever need to change this file manually; Cargo manages its contents for you.</p>
+</li>
+<li>
+<p>&quot;<strong>src/main.rs</strong>&quot;: Cargo contains a dir &quot;src&quot; for source files. The top-level project directory is just for README files, license information, configuration files, and anything else not related to your code. By default the &quot;main.rs&quot; file has:</p>
+</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    println!(&quot;Hello, world!&quot;);
+}
+</code></pre></pre>
+</li>
+<li>
+<p>While you are inside your Cargo project dir. You can do the following:</p>
+<ul>
+<li>Build(compile) our program with <code>cargo build</code></li>
+<li>Run it with <code>./target/debug/hello_cargo</code></li>
+<li>Or both build and run with <code>cargo run</code></li>
+<li>Or just check our program for errors with <code>cargo check</code> without having to compile and or run. It just checks your code but doesn't create an executable</li>
+<li>When your project is finally ready for release, you should use <code>cargo build --release</code> to compile it with optimizations. This creates an executable under <code>target/release</code> instead of <code>target/debug</code>. It is slower as compared to just <code>cargo build</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="tips"><a class="header" href="#tips">Tips</a></h2>
+<p>You might come across some rusty projects on github that require you to build the project from scratch to install it for which you usually have to follow the steps similar to:</p>
+<pre><code class="language-console">$ git clone example.org/someproject
+$ cd someproject
+$ cargo build
+</code></pre>
+<p>Usually people just open an editor to edit the source code and a terminal to build the project in which case you could just use &quot;cargo-watch&quot;. It watches over your project's source for changes, and runs Cargo commands when they occur.</p>
+<p>Install: <code>cargo install cargo-watch</code><br />
+Use: <code>cargo watch</code>(inside the project dir)</p>
+<p>Now all you have to do is edit the source code and save the file if you have to build the changes.</p>
+<!-- TODO: cargo clippy -->
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="next" href="02_programming_a_guessing_game.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="next" href="02_programming_a_guessing_game.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
