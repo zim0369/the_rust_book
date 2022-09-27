@@ -1,0 +1,15 @@
+   Compiling l01-variables-are-immutable v0.1.0 (/home/zim/github/the_rust_book/listings/03_common_concepts/l01-variables-are-immutable)
+error[E0384]: cannot assign twice to immutable variable `x`
+ --> src/main.rs:5:5
+  |
+3 |     let x = 5;
+  |         -
+  |         |
+  |         first assignment to `x`
+  |         help: consider making this binding mutable: `mut x`
+4 |     println!("The value of x is: {x}");
+5 |     x = 6;
+  |     ^^^^^ cannot assign twice to immutable variable
+
+For more information about this error, try `rustc --explain E0384`.
+error: could not compile `l01-variables-are-immutable` due to previous error

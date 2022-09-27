@@ -1,0 +1,5 @@
+   Compiling l02-shadowing v0.1.0 (/home/zim/github/the_rust_book/listings/03_common_concepts/l02-shadowing)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.66s
+     Running `target/debug/l02-shadowing`
+The length of string 'x' is: 4
+Five is greater than four

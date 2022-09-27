@@ -1,0 +1,1 @@
+/home/zim/github/the_rust_book/listings/03_common_concepts/l11-01-temperature/target/debug/l11-01-temperature: /home/zim/github/the_rust_book/listings/03_common_concepts/l11-01-temperature/src/main.rs

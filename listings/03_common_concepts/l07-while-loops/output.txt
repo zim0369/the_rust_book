@@ -1,0 +1,6 @@
+    Finished dev [unoptimized + debuginfo] target(s) in 0.01s
+     Running `target/debug/l07-while-loops`
+3!
+2!
+1!
+LIFTOFF!!!

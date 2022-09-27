@@ -1,0 +1,4 @@
+   Compiling l03-if-else v0.1.0 (/home/zim/github/the_rust_book/listings/03_common_concepts/l03-if-else)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.24s
+     Running `target/debug/l03-if-else`
+number is divisible by 3

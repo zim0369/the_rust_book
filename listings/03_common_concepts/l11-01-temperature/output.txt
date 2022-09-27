@@ -1,0 +1,4 @@
+   Compiling l11-01-temperature v0.1.0 (/home/zim/github/the_rust_book/listings/03_common_concepts/l11-01-temperature)
+    Finished dev [unoptimized + debuginfo] target(s) in 1.22s
+     Running `target/debug/l11-01-temperature`
+Fahrenheit(f) or Celsius(c)? 

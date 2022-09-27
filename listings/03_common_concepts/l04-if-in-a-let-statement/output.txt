@@ -1,0 +1,4 @@
+   Compiling l04-if-in-a-let-statement v0.1.0 (/home/zim/github/the_rust_book/listings/03_common_concepts/l04-if-in-a-let-statement)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.67s
+     Running `target/debug/l04-if-in-a-let-statement`
+The value of number is: 5

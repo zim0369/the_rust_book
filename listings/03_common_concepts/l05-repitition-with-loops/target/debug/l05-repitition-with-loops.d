@@ -1,0 +1,1 @@
+/home/zim/github/the_rust_book/listings/03_common_concepts/l05-repitition-with-loops/target/debug/l05-repitition-with-loops: /home/zim/github/the_rust_book/listings/03_common_concepts/l05-repitition-with-loops/src/main.rs
