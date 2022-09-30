@@ -19,12 +19,12 @@ The above code doesn't compile. To make it compile we'll have to make "x" mutabl
 
 ## Constants
 
-- Always immutable
-- Type of the value **must** be annotated
-- can be declared in any scope
-- can only be set to a constant expression, not the result of a value that could only be computed at runtime. [Read Constant Evaluation](https://doc.rust-lang.org/reference/const_eval.html).
-- always written in uppercase and underscores are used to separate words
-- Example:
+*   Always immutable
+*   Type of the value **must** be annotated
+*   can be declared in any scope
+*   can only be set to a constant expression, not the result of a value that could only be computed at runtime. [Read Constant Evaluation](https://doc.rust-lang.org/reference/const_eval.html).
+*   always written in uppercase and underscores are used to separate words
+*   Example:
 
 ```rust
 # #![allow(unused)]
@@ -53,13 +53,14 @@ We can even change the type of variables
 
 ## Datatypes
 
-- Rust has four primary scalar types: integers, float, boolean, and characters.
-- Length of types `isize` & `usize` depends upon the underlying architecture(32bit or 64bit)
-- Each variant of an Integer type can be signed(`i8`) or unsigned(`u8`)
-- Rust’s char type is four bytes in size and represents a Unicode Scalar Value, which means it can represent a lot more than just ASCII.
-- Rust's tuple type: ex- `let tup: (i32, f64, u8) = (500, 6.4, 1);`
-- Array's in Rust are homogenous `let a: [i32; 5] = [1, 2, 3, 4, 5];`
-- `let a = [3; 5];` crates an array `[3, 3, 3, 3, 3]`
+*   Rust has four primary scalar types: integers, float, boolean, and characters.
+*   Length of types `isize` & `usize` depends upon the underlying architecture(32bit or 64bit)
+*   Each variant of an Integer type can be signed(`i8`) or unsigned(`u8`)
+*   Rust’s char type is four bytes in size and represents a Unicode Scalar Value, which means it can represent a lot more than just ASCII.
+*   Rust's tuple type: ex- `let tup: (i32, f64, u8) = (500, 6.4, 1);`
+*   The tuple without any values has a special name, unit. This value and its corresponding type are both written `()` and represent an empty value or an empty return type. Expressions implicitly return the unit value if they don’t return any other value..
+*   Array's in Rust are homogenous `let a: [i32; 5] = [1, 2, 3, 4, 5];`
+*   `let a = [3; 5];` crates an array `[3, 3, 3, 3, 3]`
 
 ## Invalid Array Element Access
 
@@ -67,30 +68,30 @@ Let's say you have an array in a program with 5 elements and take user input to 
 
 ## Functions
 
-- Type annotations for parameters are mandatory.
+*   Type annotations for parameters are mandatory.
 
 <!-- TODO: Add an example function that takes a variety of parameters -->
 
 <details>
 <summary>Common</summary>
 
-- Common functions
+*   Common functions
 
-  - `clone()`:
-  - `is_ok()`:
-  - `is_some()`:
-  - `iter()`:
-  - `unwrap()`:
+    *   `clone()`:
+    *   `is_ok()`:
+    *   `is_some()`:
+    *   `iter()`:
+    *   `unwrap()`:
 
-- Common macros
-  - `format!()`:
-  - `panic!()`:
+*   Common macros
+    *   `format!()`:
+    *   `panic!()`:
 
 </details>
 
 ## Statements & Expressions
 
-- Statements are instructions that perform some action and do not return a value. Expressions evaluate to a resulting value. Let’s look at some examples.
+*   Statements are instructions that perform some action and do not return a value. Expressions evaluate to a resulting value. Let’s look at some examples.
 
 ## Comments
 
@@ -219,7 +220,8 @@ In the code below:
 <details>
 <summary>Common</summary>
 
-- Common methods
+*   Common methods
+
 <!-- TODO: add zip() method here -->
 
 </details>
@@ -234,19 +236,19 @@ In the code below:
 
 ## EXERCISES
 
-- Convert temperatures between Fahrenheit and Celsius:
+*   Convert temperatures between Fahrenheit and Celsius:
 
 ```rust
 {{#rustdoc_include ../listings/03_common_concepts/l11-01-temperature/src/main.rs:all}}
 ```
 
-- Generate the nth Fibonacci number:
+*   Generate the nth Fibonacci number:
 
 ```rust
 {{#rustdoc_include ../listings/03_common_concepts/l11-02-fibonacci/src/main.rs:all}}
 ```
 
-- Print the lyrics to the Christmas carol "The Twelve Days of Christmas," taking advantage of the repetition in the song.
+*   Print the lyrics to the Christmas carol "The Twelve Days of Christmas," taking advantage of the repetition in the song.
 
 ```rust
 {{#rustdoc_include ../listings/03_common_concepts/l11-03-christmas/src/main.rs:all}}

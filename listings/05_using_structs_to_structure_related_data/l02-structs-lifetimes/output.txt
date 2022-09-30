@@ -1,0 +1,30 @@
+   Compiling l02-structs-lifetimes v0.1.0 (/home/zim/github/the_rust_book/listings/05_using_structs_to_structure_related_data/l02-structs-lifetimes)
+error[E0106]: missing lifetime specifier
+ --> src/main.rs:4:15
+  |
+4 |     username: &str,
+  |               ^ expected named lifetime parameter
+  |
+help: consider introducing a named lifetime parameter
+  |
+2 ~ struct User<'a> {
+3 |     active: bool,
+4 ~     username: &'a str,
+  |
+
+error[E0106]: missing lifetime specifier
+ --> src/main.rs:5:12
+  |
+5 |     email: &str,
+  |            ^ expected named lifetime parameter
+  |
+help: consider introducing a named lifetime parameter
+  |
+2 ~ struct User<'a> {
+3 |     active: bool,
+4 |     username: &str,
+5 ~     email: &'a str,
+  |
+
+For more information about this error, try `rustc --explain E0106`.
+error: could not compile `l02-structs-lifetimes` due to 2 previous errors

@@ -135,6 +135,46 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="enums-and-pattern-matching"><a class="header" href="#enums-and-pattern-matching">Enums And Pattern Matching</a></h1>
+<pre><pre class="playground"><code class="language-rust">
+// We use tuple structs when we want to give names to tuples
+struct Scores(i32, f32, u32);
+
+struct User {
+    _name: String,  // Can't use &quot;str&quot; here
+    scores: Scores, // Another struct
+    new: bool,
+}
+
+fn add_user(name: String, scores: Scores) -&gt; User {
+    User {
+        _name: name, // field init shorthand(shortens: `name: name,`)
+        scores,
+        new: true,
+    }
+}
+
+fn main() {
+    // Entire struct must be mutable. Individual fields can't be mutable.
+    let mut zim = add_user(String::from(&quot;Invader Zim&quot;), Scores(0, 3.6, 9));
+    let gir = User {
+        _name: String::from(&quot;Gir&quot;),
+        ..zim // struct update syntax.
+    };
+    zim.new = false; // Updating a value
+    dbg!(gir.scores.2);
+    // dbg!(zim.scores.2); // Error!
+    dbg!(zim.new);
+}
+</code></pre></pre>
+<details>
+<summary>Output</summary>
+<pre><code class="language-console">   Compiling l01-structs v0.1.0 (/home/zim/github/the_rust_book/listings/05_using_structs_to_structure_related_data/l01-structs)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.36s
+     Running `target/debug/l01-structs`
+[src/main.rs:28] gir.scores.2 = 9
+[src/main.rs:30] zim.new = false
+</code></pre>
+</details>
 
                     </main>
 

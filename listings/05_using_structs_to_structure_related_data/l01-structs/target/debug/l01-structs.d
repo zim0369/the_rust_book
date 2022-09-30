@@ -1,0 +1,1 @@
+/home/zim/github/the_rust_book/listings/05_using_structs_to_structure_related_data/l01-structs/target/debug/l01-structs: /home/zim/github/the_rust_book/listings/05_using_structs_to_structure_related_data/l01-structs/src/main.rs

@@ -135,6 +135,237 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="using-structs-to-structure-related-data"><a class="header" href="#using-structs-to-structure-related-data">Using Structs To Structure Related Data</a></h1>
+<h2 id="structs"><a class="header" href="#structs">Structs</a></h2>
+<ul>
+<li>Structs are similar to tuples, in that both hold multiple related values.</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust">
+// We use tuple structs when we want to give names to tuples
+struct Scores(i32, f32, u32);
+
+struct User {
+    _name: String,  // Can't use &quot;str&quot; here
+    scores: Scores, // Another struct
+    new: bool,
+}
+
+fn add_user(name: String, scores: Scores) -&gt; User {
+    User {
+        _name: name, // field init shorthand(shortens: `name: name,`)
+        scores,
+        new: true,
+    }
+}
+
+fn main() {
+    // Entire struct must be mutable. Individual fields can't be mutable.
+    let mut zim = add_user(String::from(&quot;Invader Zim&quot;), Scores(0, 3.6, 9));
+    let gir = User {
+        _name: String::from(&quot;Gir&quot;),
+        ..zim // struct update syntax.
+    };
+    zim.new = false; // Updating a value
+    dbg!(gir.scores.2);
+    // dbg!(zim.scores.2); // Error!
+    dbg!(zim.new);
+}
+</code></pre></pre>
+<details>
+<summary>Output</summary>
+<pre><code class="language-console">   Compiling l01-structs v0.1.0 (/home/zim/github/the_rust_book/listings/05_using_structs_to_structure_related_data/l01-structs)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.36s
+     Running `target/debug/l01-structs`
+[src/main.rs:28] gir.scores.2 = 9
+[src/main.rs:30] zim.new = false
+</code></pre>
+</details>
+<ul>
+<li>
+<p>field <code>_name</code> is prefixed with <code>_</code> to avoid warnings because we aren't going to use it.</p>
+</li>
+<li>
+<p>The field <code>scores</code> is a tuple struct</p>
+</li>
+<li>
+<p>On this line the fields <code>name</code> &amp; <code>scores</code> were moved into <code>gir</code> because <code>String</code>
+and <code>scores</code> do not implement the <code>Copy</code> trait:</p>
+</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">// ANCHOR: all
+</span><span class="boring">
+</span><span class="boring">// We use tuple structs when we want to give names to tuples
+</span><span class="boring">struct Scores(i32, f32, u32);
+</span><span class="boring">
+</span><span class="boring">struct User {
+</span><span class="boring">    _name: String,  // Can't use &quot;str&quot; here
+</span><span class="boring">    scores: Scores, // Another struct
+</span><span class="boring">    new: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn add_user(name: String, scores: Scores) -&gt; User {
+</span><span class="boring">    User {
+</span><span class="boring">        _name: name, // field init shorthand(shortens: `name: name,`)
+</span><span class="boring">        scores,
+</span><span class="boring">        new: true,
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    // Entire struct must be mutable. Individual fields can't be mutable.
+</span><span class="boring">    let mut zim = add_user(String::from(&quot;Invader Zim&quot;), Scores(0, 3.6, 9));
+</span><span class="boring">    let gir = User {
+</span><span class="boring">        _name: String::from(&quot;Gir&quot;),
+</span>        ..zim // struct update syntax.
+<span class="boring">    };
+</span><span class="boring">    zim.new = false; // Updating a value
+</span><span class="boring">    dbg!(gir.scores.2);
+</span><span class="boring">    // dbg!(zim.scores.2); // Error!
+</span><span class="boring">    dbg!(zim.new);
+</span><span class="boring">}
+</span><span class="boring">// ANCHOR: all
+</span></code></pre></pre>
+<ul>
+<li>Accessing these fields will cause an error:</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">// ANCHOR: all
+</span><span class="boring">
+</span><span class="boring">// We use tuple structs when we want to give names to tuples
+</span><span class="boring">struct Scores(i32, f32, u32);
+</span><span class="boring">
+</span><span class="boring">struct User {
+</span><span class="boring">    _name: String,  // Can't use &quot;str&quot; here
+</span><span class="boring">    scores: Scores, // Another struct
+</span><span class="boring">    new: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn add_user(name: String, scores: Scores) -&gt; User {
+</span><span class="boring">    User {
+</span><span class="boring">        _name: name, // field init shorthand(shortens: `name: name,`)
+</span><span class="boring">        scores,
+</span><span class="boring">        new: true,
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    // Entire struct must be mutable. Individual fields can't be mutable.
+</span><span class="boring">    let mut zim = add_user(String::from(&quot;Invader Zim&quot;), Scores(0, 3.6, 9));
+</span><span class="boring">    let gir = User {
+</span><span class="boring">        _name: String::from(&quot;Gir&quot;),
+</span><span class="boring">        ..zim // struct update syntax.
+</span><span class="boring">    };
+</span><span class="boring">    zim.new = false; // Updating a value
+</span><span class="boring">    dbg!(gir.scores.2);
+</span>    // dbg!(zim.scores.2); // Error!
+<span class="boring">    dbg!(zim.new);
+</span><span class="boring">}
+</span><span class="boring">// ANCHOR: all
+</span></code></pre></pre>
+<ul>
+<li>The field <code>new</code> is still valid and can be accessed.</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">// ANCHOR: all
+</span><span class="boring">
+</span><span class="boring">// We use tuple structs when we want to give names to tuples
+</span><span class="boring">struct Scores(i32, f32, u32);
+</span><span class="boring">
+</span><span class="boring">struct User {
+</span><span class="boring">    _name: String,  // Can't use &quot;str&quot; here
+</span><span class="boring">    scores: Scores, // Another struct
+</span><span class="boring">    new: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn add_user(name: String, scores: Scores) -&gt; User {
+</span><span class="boring">    User {
+</span><span class="boring">        _name: name, // field init shorthand(shortens: `name: name,`)
+</span><span class="boring">        scores,
+</span><span class="boring">        new: true,
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    // Entire struct must be mutable. Individual fields can't be mutable.
+</span><span class="boring">    let mut zim = add_user(String::from(&quot;Invader Zim&quot;), Scores(0, 3.6, 9));
+</span><span class="boring">    let gir = User {
+</span><span class="boring">        _name: String::from(&quot;Gir&quot;),
+</span><span class="boring">        ..zim // struct update syntax.
+</span><span class="boring">    };
+</span><span class="boring">    zim.new = false; // Updating a value
+</span><span class="boring">    dbg!(gir.scores.2);
+</span><span class="boring">    // dbg!(zim.scores.2); // Error!
+</span>    dbg!(zim.new);
+<span class="boring">}
+</span><span class="boring">// ANCHOR: all
+</span></code></pre></pre>
+<ul>
+<li>Unit-like structs can be useful when you need to implement a trait on some type but don’t have any data that you want to store in the type itself:</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust">struct AlwaysEqual;
+
+fn main() {
+    let subject = AlwaysEqual;
+}
+
+</code></pre></pre>
+<h2 id="ownership-of-struct-data"><a class="header" href="#ownership-of-struct-data">Ownership of Struct Data</a></h2>
+<ul>
+<li>
+<p>In the User struct definition we used the owned String type rather than the <code>&amp;str</code> string slice type. This is a deliberate choice because we want each instance of this struct to own all of its data and for that data to be valid for as long as the entire struct is valid.</p>
+</li>
+<li>
+<p>It’s also possible for structs to store references to data owned by something else, but to do so requires the use of lifetimes, a Rust feature that we’ll discuss in Chapter 10. Lifetimes ensure that the data referenced by a struct is valid for as long as the struct is. Let’s say you try to store a reference in a struct without specifying lifetimes, like the following; this won’t work:</p>
+</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust">struct User {
+    active: bool,
+    username: &amp;str,
+    email: &amp;str,
+    sign_in_count: u64,
+}
+
+fn main() {
+    let user1 = User {
+        email: &quot;someone@example.com&quot;,
+        username: &quot;someusername123&quot;,
+        active: true,
+        sign_in_count: 1,
+    };
+}
+</code></pre></pre>
+<p>The compiler will complain that it needs lifetime specifiers:</p>
+<details>
+<summary>Error</summary>
+<pre><code class="language-console">   Compiling l02-structs-lifetimes v0.1.0 (/home/zim/github/the_rust_book/listings/05_using_structs_to_structure_related_data/l02-structs-lifetimes)
+error[E0106]: missing lifetime specifier
+ --&gt; src/main.rs:4:15
+  |
+4 |     username: &amp;str,
+  |               ^ expected named lifetime parameter
+  |
+help: consider introducing a named lifetime parameter
+  |
+2 ~ struct User&lt;'a&gt; {
+3 |     active: bool,
+4 ~     username: &amp;'a str,
+  |
+
+error[E0106]: missing lifetime specifier
+ --&gt; src/main.rs:5:12
+  |
+5 |     email: &amp;str,
+  |            ^ expected named lifetime parameter
+  |
+help: consider introducing a named lifetime parameter
+  |
+2 ~ struct User&lt;'a&gt; {
+3 |     active: bool,
+4 |     username: &amp;str,
+5 ~     email: &amp;'a str,
+  |
+
+For more information about this error, try `rustc --explain E0106`.
+error: could not compile `l02-structs-lifetimes` due to 2 previous errors
+</code></pre>
+</details>
 
                     </main>
 
