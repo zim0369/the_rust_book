@@ -1,0 +1,4 @@
+   Compiling l01-get-first-word-index v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/l01-get-first-word-index)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.56s
+     Running `target/debug/l01-get-first-word-index`
+[src/main.rs:18] word = 3

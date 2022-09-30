@@ -1,0 +1,1 @@
+/home/zim/github/the_rust_book/listings/04_understanding_ownership/l03-other-slices/target/debug/l03-other-slices: /home/zim/github/the_rust_book/listings/04_understanding_ownership/l03-other-slices/src/main.rs

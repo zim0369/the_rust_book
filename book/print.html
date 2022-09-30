@@ -918,7 +918,9 @@ fn takes_and_gives_back(a_string: String) -&gt; String { // a_string comes into
 </code></pre></pre>
 <h2 id="references-and-borrowing"><a class="header" href="#references-and-borrowing">References and Borrowing</a></h2>
 <ul>
-<li>All references are stored on the stack <!-- TODO: Check if this statement is correct --></li>
+<li>All references are stored on the stack. Although you can store references on
+the heap, you might need another reference to refer to it. Basically, you need a
+reference to refer to anything on the heap.</li>
 <li>Unlike a pointer, a reference is guaranteed to point to a valid value of a particular type for the life of that reference.</li>
 </ul>
 <pre><pre class="playground"><code class="language-rust">fn main() {
@@ -1076,6 +1078,102 @@ error: could not compile `ownership` due to previous error
 for it to be borrowed from
 </code></pre>
 <h2 id="slice-type-different-kind-of-references"><a class="header" href="#slice-type-different-kind-of-references">Slice Type: Different kind of references</a></h2>
+<p>Let's write a program to output the first word of a string:</p>
+<pre><pre class="playground"><code class="language-rust">fn first_word(s: &amp;String) -&gt; usize {
+    let s = s.as_bytes();
+
+    for (i, &amp;item) in s.iter().enumerate() {
+        if item == b' ' {
+            return i;
+        }
+    }
+    s.len()
+}
+
+fn main() {
+    let mut s = String::from(&quot;Get first word&quot;);
+    let word = first_word(&amp;s);
+    s.clear(); // word still has the value 5
+    dbg!(word);
+}
+</code></pre></pre>
+<details>
+<summary>Output</summary>
+<pre><code class="language-console">   Compiling l01-get-first-word-index v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/l01-get-first-word-index)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.56s
+     Running `target/debug/l01-get-first-word-index`
+[src/main.rs:18] word = 3
+</code></pre>
+</details>
+<ul>
+<li>
+<p>In the above program <code>word</code> still holds the value <code>3</code> which is meaningless after
+the <code>String</code> gets cleared. If we use <code>word</code> further, our program will panic.</p>
+</li>
+<li>
+<p>This can be avoided if our function returned a slice.</p>
+</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust">fn first_word(s: &amp;String) -&gt; &amp;str {
+    for (i, &amp;item) in s.as_bytes().iter().enumerate() {
+        if item == b' ' {
+            return &amp;s[..i];
+        }
+    }
+    &amp;s[..]
+}
+
+fn main() {
+    let mut s = String::from(&quot;Get first word&quot;);
+    let word = first_word(&amp;s);
+    s.clear(); // Error!
+    dbg!(word);
+}
+</code></pre></pre>
+<details>
+<summary>Error</summary>
+<pre><code class="language-console">   Compiling l02-get-first-word-slice v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/l02-get-first-word-slice)
+error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
+  --&gt; src/main.rs:13:5
+   |
+12 |     let word = first_word(&amp;s);
+   |                           -- immutable borrow occurs here
+13 |     s.clear(); // Error!
+   |     ^^^^^^^^^ mutable borrow occurs here
+14 |     dbg!(word);
+   |          ---- immutable borrow later used here
+
+For more information about this error, try `rustc --explain E0502`.
+error: could not compile `l02-get-first-word-slice` due to previous error
+</code></pre>
+</details>
+<ul>
+<li>
+<p>The above program doesn't compile</p>
+</li>
+<li>
+<p>If we have a string slice, we can pass that directly. If we have a String, we can pass a slice of the String or a reference to the String. This flexibility takes advantage of deref coercions, a feature we will cover in the <a href="https://doc.rust-lang.org/book/ch15-02-deref.html#implicit-deref-coercions-with-functions-and-methods"> &quot;Implicit Deref Coercions with Functions and Methods&quot; </a> section of Chapter 15.</p>
+</li>
+<li>
+<p>This program can also be improved by using <code>&amp;str</code> instead of <code>&amp;String</code> in the function signature.</p>
+</li>
+<li>
+<p>Defining a function to take a string slice instead of a reference to a String makes our API more general and useful without losing any functionality</p>
+</li>
+</ul>
+<h3 id="other-slices"><a class="header" href="#other-slices">Other Slices</a></h3>
+<p>We can use slices to refer to part of an array:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let a = [1, 2, 3, 4, 5]; // Type: &amp;[i32]
+
+    let slice = &amp;a[1..3];
+
+    assert_eq!(slice, &amp;[2, 3]);
+    // assert_eq!(slice, [2, 3]); // Both work
+}
+</code></pre></pre>
+<p>In the above program both <code>&amp;[2, 3]</code> and <code>[2, 3]</code> because.</p>
+<p><a href="https://doc.rust-lang.org/stable/std/primitive.array.html#impl-PartialEq%3C%26%5BB%5D%3E-for-%5BA%3B%20N%5D"><img src="./images/04/partialeq.png" alt="Amanda Rust Matrix Server" /></a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="using-structs-to-structure-related-data"><a class="header" href="#using-structs-to-structure-related-data">Using Structs To Structure Related Data</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="enums-and-pattern-matching"><a class="header" href="#enums-and-pattern-matching">Enums And Pattern Matching</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="managing-growing-projects-with-packages-crates-and-modules"><a class="header" href="#managing-growing-projects-with-packages-crates-and-modules">Managing Growing Projects With Packages Crates And Modules</a></h1>

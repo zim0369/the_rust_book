@@ -1,0 +1,1 @@
+/home/zim/github/the_rust_book/listings/04_understanding_ownership/l02-get-first-word-slice/target/debug/l02-get-first-word-slice: /home/zim/github/the_rust_book/listings/04_understanding_ownership/l02-get-first-word-slice/src/main.rs

@@ -1,0 +1,13 @@
+   Compiling l02-get-first-word-slice v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/l02-get-first-word-slice)
+error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
+  --> src/main.rs:13:5
+   |
+12 |     let word = first_word(&s);
+   |                           -- immutable borrow occurs here
+13 |     s.clear(); // Error!
+   |     ^^^^^^^^^ mutable borrow occurs here
+14 |     dbg!(word);
+   |          ---- immutable borrow later used here
+
+For more information about this error, try `rustc --explain E0502`.
+error: could not compile `l02-get-first-word-slice` due to previous error

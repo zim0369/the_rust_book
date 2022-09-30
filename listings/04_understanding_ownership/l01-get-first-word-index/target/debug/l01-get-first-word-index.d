@@ -1,0 +1,1 @@
+/home/zim/github/the_rust_book/listings/04_understanding_ownership/l01-get-first-word-index/target/debug/l01-get-first-word-index: /home/zim/github/the_rust_book/listings/04_understanding_ownership/l01-get-first-word-index/src/main.rs
