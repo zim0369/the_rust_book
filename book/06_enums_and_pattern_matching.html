@@ -137,8 +137,10 @@
                         <h1 id="enums-and-pattern-matching"><a class="header" href="#enums-and-pattern-matching">Enums And Pattern Matching</a></h1>
 <pre><pre class="playground"><code class="language-rust">
 // We use tuple structs when we want to give names to tuples
+#[derive(Debug)] // To print with dbg!
 struct Scores(i32, f32, u32);
 
+#[derive(Debug)] // To print with dbg!
 struct User {
     _name: String,  // Can't use &quot;str&quot; here
     scores: Scores, // Another struct
@@ -164,15 +166,30 @@ fn main() {
     dbg!(gir.scores.2);
     // dbg!(zim.scores.2); // Error!
     dbg!(zim.new);
+
+    // Printing an entire struct
+    // println!(&quot;{:?}&quot;, gir); // cannot format with {:?}
+    // println!(&quot;{gir}&quot;); // cannot format with default formatter
+
+    dbg!(gir); // cannot format with {:?}
 }
 </code></pre></pre>
 <details>
 <summary>Output</summary>
 <pre><code class="language-console">   Compiling l01-structs v0.1.0 (/home/zim/github/the_rust_book/listings/05_using_structs_to_structure_related_data/l01-structs)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.36s
+    Finished dev [unoptimized + debuginfo] target(s) in 0.53s
      Running `target/debug/l01-structs`
-[src/main.rs:28] gir.scores.2 = 9
-[src/main.rs:30] zim.new = false
+[src/main.rs:30] gir.scores.2 = 9
+[src/main.rs:32] zim.new = false
+[src/main.rs:38] gir = User {
+    _name: &quot;Gir&quot;,
+    scores: Scores(
+        0,
+        3.6,
+        9,
+    ),
+    new: true,
+}
 </code></pre>
 </details>
 

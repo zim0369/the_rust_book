@@ -1,5 +1,14 @@
    Compiling l01-structs v0.1.0 (/home/zim/github/the_rust_book/listings/05_using_structs_to_structure_related_data/l01-structs)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.36s
+    Finished dev [unoptimized + debuginfo] target(s) in 0.53s
      Running `target/debug/l01-structs`
-[src/main.rs:28] gir.scores.2 = 9
-[src/main.rs:30] zim.new = false
+[src/main.rs:30] gir.scores.2 = 9
+[src/main.rs:32] zim.new = false
+[src/main.rs:38] gir = User {
+    _name: "Gir",
+    scores: Scores(
+        0,
+        3.6,
+        9,
+    ),
+    new: true,
+}

@@ -1,8 +1,10 @@
 // ANCHOR: all
 
 // We use tuple structs when we want to give names to tuples
+#[derive(Debug)] // To print with dbg!
 struct Scores(i32, f32, u32);
 
+#[derive(Debug)] // To print with dbg!
 struct User {
     _name: String,  // Can't use "str" here
     scores: Scores, // Another struct
@@ -28,5 +30,11 @@ fn main() {
     dbg!(gir.scores.2);
     // dbg!(zim.scores.2); // Error!
     dbg!(zim.new);
+
+    // Printing an entire struct
+    // println!("{:?}", gir); // cannot format with {:?}
+    // println!("{gir}"); // cannot format with default formatter
+
+    dbg!(gir); // cannot format with {:?}
 }
 // ANCHOR: all
