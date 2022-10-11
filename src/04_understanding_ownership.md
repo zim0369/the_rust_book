@@ -26,20 +26,26 @@
 
 *   Let's look at the ways variables and data interact
 
-    ```rust
-    fn main() {
-        let s1 = String::from("hello");
-        let s2 = s1;
-    }
-    ```
+```rust
+{{#rustdoc_include ../listings/04_understanding_ownership/string-memory-representation/src/main.rs:all}}
+```
+
+<details>
+<summary>Output</summary>
+
+```console
+{{#include ../listings/04_understanding_ownership/string-memory-representation/output.txt}}
+```
+
+</details>
 
 *   This is how the memory representation looks like for:
 
-    ```rust
-    let s1 = String::from("hello");
-    ```
+```rust
+{{#rustdoc_include ../listings/04_understanding_ownership/string-memory-representation/src/main.rs:s1}}
+```
 
-    ![s1 points to data on heap](images/04/s1_heap.png)
+![s1 points to data on heap](images/04/s1_heap.png)
 
 *   This is how the memory representation would look like if you clone `s1` i.e.
 
@@ -62,49 +68,34 @@
 *   The code below works and `x` wasn't moved into `y` because the size of types like integers is known at compile time so they are stored on stack.
 
 ```rust
-#fn main() {
-    let x = 5;
-    let y = x;
-
-    println!("x = {}, y = {}", x, y);
-#}
+{{#rustdoc_include ../listings/04_understanding_ownership/scalar-type-memory-representation/src/main.rs:all}}
 ```
+
+<details>
+<summary>Output</summary>
+
+```console
+{{#include ../listings/04_understanding_ownership/scalar-type-memory-representation/output.txt}}
+```
+
+</details>
 
 ## Ownership and Functions
 
 The mechanics of passing a value to a function are similar to those when assigning a value to a variable.
 
 ```rust
-fn main() {
-    let s1 = gives_ownership();         // gives_ownership moves its return
-                                        // value into s1
-
-    let s2 = String::from("hello");     // s2 comes into scope
-
-    let s3 = takes_and_gives_back(s2);  // s2 is moved into
-                                        // takes_and_gives_back, which also
-                                        // moves its return value into s3
-} // Here, s3 goes out of scope and is dropped. s2 was moved, so nothing
-  // happens. s1 goes out of scope and is dropped.
-
-fn gives_ownership() -> String {             // gives_ownership will move its
-                                             // return value into the function
-                                             // that calls it
-
-    let some_string = String::from("yours"); // some_string comes into scope
-
-    some_string                              // some_string is returned and
-                                             // moves out to the calling
-                                             // function
-}
-
-// This function takes a String and returns one
-fn takes_and_gives_back(a_string: String) -> String { // a_string comes into
-                                                      // scope
-
-    a_string  // a_string is returned and moves out to the calling function
-}
+{{#rustdoc_include ../listings/04_understanding_ownership/ownership-and-functions/src/main.rs:all}}
 ```
+
+<details>
+<summary>Output</summary>
+
+```console
+{{#include ../listings/04_understanding_ownership/ownership-and-functions/output.txt}}
+```
+
+</details>
 
 ## References and Borrowing
 
@@ -114,19 +105,17 @@ fn takes_and_gives_back(a_string: String) -> String { // a_string comes into
 *   Unlike a pointer, a reference is guaranteed to point to a valid value of a particular type for the life of that reference.
 
 ```rust
-fn main() {
-    let s1 = String::from("hello");
-
-    let len = calculate_length(&s1);
-
-    println!("The length of '{}' is {}.", s1, len);
-}
-
-fn calculate_length(s: &String) -> usize { // s is a reference to a String
-    s.len()
-} // Here, s goes out of scope. But because it does not have ownership of what
-  // it refers to, it is not dropped.
+{{#rustdoc_include ../listings/04_understanding_ownership/references-and-borrowing/src/main.rs:all}}
 ```
+
+<details>
+<summary>Output</summary>
+
+```console
+{{#include ../listings/04_understanding_ownership/references-and-borrowing/output.txt}}
+```
+
+</details>
 
 *   The memory representation for the above code looks like:
 
@@ -141,35 +130,17 @@ fn calculate_length(s: &String) -> usize { // s is a reference to a String
 *   If you have a mutable reference to a value, you can have no other references to that value.
 
 ```rust
-fn main() {
-    let mut s = String::from("hello");
-
-    let r1 = &mut s;
-    let r2 = &mut s;
-
-    println!("{}, {}", r1, r2);
-}
+{{#rustdoc_include ../listings/04_understanding_ownership/references-and-borrowing-2/src/main.rs:all}}
 ```
 
-Error:
+<details>
+<summary>Error</summary>
 
 ```console
-$ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
-error[E0499]: cannot borrow `s` as mutable more than once at a time
- --> src/main.rs:5:14
-  |
-4 |     let r1 = &mut s;
-  |              ------ first mutable borrow occurs here
-5 |     let r2 = &mut s;
-  |              ^^^^^^ second mutable borrow occurs here
-6 |
-7 |     println!("{}, {}", r1, r2);
-  |                        -- first borrow later used here
-
-For more information about this error, try `rustc --explain E0499`.
-error: could not compile `ownership` due to previous error
+{{#include ../listings/04_understanding_ownership/references-and-borrowing-2/output.txt}}
 ```
+
+</details>
 
 The benefit of having this restriction is that Rust can prevent data races at compile time. A data race is similar to a race condition and happens when these three behaviors occur:
 
@@ -180,51 +151,32 @@ The benefit of having this restriction is that Rust can prevent data races at co
 As always, we can use curly brackets to create a new scope, allowing for multiple mutable references, just not simultaneous ones:
 
 ```rust
-fn main() {
-    let mut s = String::from("hello");
-
-    {
-        let r1 = &mut s;
-    } // r1 goes out of scope here, so we can make a new reference with no problems.
-
-    let r2 = &mut s;
-}
+{{#rustdoc_include ../listings/04_understanding_ownership/references-and-borrowing-3/src/main.rs:all}}
 ```
+
+<details>
+<summary>Error</summary>
+
+```console
+{{#include ../listings/04_understanding_ownership/references-and-borrowing-3/output.txt}}
+```
+
+</details>
 
 Rust enforces a similar rule for combining mutable and immutable references.
 
 ```rust
-fn main() {
-    let mut s = String::from("hello");
-
-    let r1 = &s; // no problem
-    let r2 = &s; // no problem
-    let r3 = &mut s; // BIG PROBLEM
-
-    println!("{}, {}, and {}", r1, r2, r3);
-}
+{{#rustdoc_include ../listings/04_understanding_ownership/references-and-borrowing-4/src/main.rs:all}}
 ```
 
-Error:
+<details>
+<summary>Error</summary>
 
 ```console
-$ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
-error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
- --> src/main.rs:6:14
-  |
-4 |     let r1 = &s; // no problem
-  |              -- immutable borrow occurs here
-5 |     let r2 = &s; // no problem
-6 |     let r3 = &mut s; // BIG PROBLEM
-  |              ^^^^^^ mutable borrow occurs here
-7 |
-8 |     println!("{}, {}, and {}", r1, r2, r3);
-  |                                -- immutable borrow later used here
-
-For more information about this error, try `rustc --explain E0502`.
-error: could not compile `ownership` due to previous error
+{{#include ../listings/04_understanding_ownership/references-and-borrowing-4/output.txt}}
 ```
+
+</details>
 
 Whew! We also cannot have a mutable reference while we have an immutable one to the same value.
 
@@ -233,63 +185,36 @@ Users of an immutable reference don’t expect the value to suddenly change out 
 Note that a reference’s scope starts from where it is introduced and continues through the last time that reference is used. So this code compiles:
 
 ```rust
-fn main() {
-    let mut s = String::from("hello");
-
-    let r1 = &s; // no problem
-    let r2 = &s; // no problem
-    println!("{} and {}", r1, r2);
-    // variables r1 and r2 will not be used after this point
-
-    let r3 = &mut s; // no problem
-    println!("{}", r3);
-}
+{{#rustdoc_include ../listings/04_understanding_ownership/references-and-borrowing-5/src/main.rs:all}}
 ```
+
+<details>
+<summary>Output</summary>
+
+```console
+{{#include ../listings/04_understanding_ownership/references-and-borrowing-5/output.txt}}
+```
+
+</details>
 
 ## Dangling References
 
 ```rust
-fn main() {
-    let reference_to_nothing = dangle();
-}
-
-fn dangle() -> &String { // dangle returns a reference to a String
-
-    let s = String::from("hello"); // s is a new String
-
-    &s // we return a reference to the String, s
-} // Here, s goes out of scope, and is dropped. Its memory goes away.
-  // Danger!
+{{#rustdoc_include ../listings/04_understanding_ownership/dangling-references/src/main.rs:all}}
 ```
 
-Error:
+<details>
+<summary>Error</summary>
 
 ```console
-$ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
-error[E0106]: missing lifetime specifier
- --> src/main.rs:5:16
-  |
-5 | fn dangle() -> &String {
-  |                ^ expected named lifetime parameter
-  |
-  = help: this function's return type contains a borrowed value, but there is no value for it to be borrowed from
-help: consider using the `'static` lifetime
-  |
-5 | fn dangle() -> &'static String {
-  |                ~~~~~~~~
-
-For more information about this error, try `rustc --explain E0106`.
-error: could not compile `ownership` due to previous error
-
+{{#include ../listings/04_understanding_ownership/dangling-references/output.txt}}
 ```
 
-More specifically:
+</details>
 
-```console
-this function's return type contains a borrowed value, but there is no value
-for it to be borrowed from
-```
+Specifically:
+
+<mark>this function's return type contains a borrowed value, but there is no value for it to be borrowed from</mark>
 
 ## Slice Type: Different kind of references
 

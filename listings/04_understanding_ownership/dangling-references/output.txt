@@ -1,0 +1,15 @@
+   Compiling dangling-references v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/dangling-references)
+error[E0106]: missing lifetime specifier
+ --> src/main.rs:6:16
+  |
+6 | fn dangle() -> &String { // dangle returns a reference to a String
+  |                ^ expected named lifetime parameter
+  |
+  = help: this function's return type contains a borrowed value, but there is no value for it to be borrowed from
+help: consider using the `'static` lifetime
+  |
+6 | fn dangle() -> &'static String { // dangle returns a reference to a String
+  |                 +++++++
+
+For more information about this error, try `rustc --explain E0106`.
+error: could not compile `dangling-references` due to previous error

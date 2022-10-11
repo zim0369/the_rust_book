@@ -104,13 +104,11 @@ The compiler will complain that it needs lifetime specifiers:
 *   First parameter is always self, which represents the instance of the struct the method is being called on.
 
 ```rust
-{{#rustdoc_include ../listings/05_using_structs_to_structure_related_data/l03-method-syntax/main.rs:all}}
+{{#rustdoc_include ../listings/05_using_structs_to_structure_related_data/l03-method-syntax/src/main.rs:all}}
 ```
 
-The compiler will complain that it needs lifetime specifiers:
-
 <details>
-<summary>Error</summary>
+<summary>Output</summary>
 
 ```console
 {{#include ../listings/05_using_structs_to_structure_related_data/l03-method-syntax/output.txt}}
@@ -118,6 +116,36 @@ The compiler will complain that it needs lifetime specifiers:
 
 </details>
 
-*   In the signature for area, we use \&self instead of rectangle: \&Rectangle. The \&self is actually short for self: \&Self. Within an impl block, the type Self is an alias for the type that the impl block is for. Methods must have a parameter named self of type Self for their first parameter, so Rust lets you abbreviate this with only the name self in the first parameter spot. Note that we still need to use the & in front of the self shorthand to indicate this method borrows the Self instance, just as we did in rectangle: \&Rectangle. Methods can take ownership of self, borrow self immutably as we’ve done here, or borrow self mutably, just as they can any other parameter.
+*   In the signature for area, we use `&self` instead of rectangle: `&Rectangle`. The `&self` is actually short for self: `&Self.` Within an `impl` block, the type Self is an alias for the type that the `impl` block is for. Methods must have a parameter named self of type Self for their first parameter, so Rust lets you abbreviate this with only the name self in the first parameter spot. Note that we still need to use the & in front of the self shorthand to indicate this method borrows the Self instance, just as we did in rectangle: `&Rectangle` Methods can take ownership of self, borrow self immutably as we’ve done here, or borrow self mutably, just as they can any other parameter.
 
-*   If we wanted to change the instance that we’ve called the method on as part of what the method does, we’d use \&mut self as the first parameter. Having a method that takes ownership of the instance by using just self as the first parameter is rare; this technique is usually used when the method transforms self into something else and you want to prevent the caller from using the original instance after the transformation.
+*   If we wanted to change the instance that we’ve called the method on as part of what the method does, we’d use `&mut` self as the first parameter. Having a method that takes ownership of the instance by using just self as the first parameter is rare; this technique is usually used when the method transforms self into something else and you want to prevent the caller from using the original instance after the transformation.
+
+*   We can use the same name for the method & struct field.
+
+```rust
+{{#rustdoc_include ../listings/05_using_structs_to_structure_related_data/l03-method-syntax/src/main.rs:def_width}}
+```
+
+*   Call method with `.width()` and field with just `.width`
+
+```rust
+{{#rustdoc_include ../listings/05_using_structs_to_structure_related_data/l03-method-syntax/src/main.rs:call_width}}
+```
+
+*   In C and C++, two different operators are used for calling methods. If `object` is a pointer, `object->something()` is similar to `(*object).something()`.
+
+*   Rust doesn’t have an equivalent to the -> operator; instead, Rust has a feature called automatic referencing and dereferencing. Calling methods is one of the few places in Rust that has this behavior.
+
+*   Associated functions that aren’t methods are often used for constructors that will return a new instance of the struct.
+
+```rust
+{{#rustdoc_include ../listings/05_using_structs_to_structure_related_data/l03-method-syntax/src/main.rs:associated_function}}
+```
+
+*   Called with `::` syntax
+
+```rust
+{{#rustdoc_include ../listings/05_using_structs_to_structure_related_data/l03-method-syntax/src/main.rs:call_associated_function}}
+```
+
+*   We can have our associated function in it's own impl block. Each struct is allowed to have multiple impl blocks. There’s no reason to separate these methods into multiple impl blocks here, but this is valid syntax.

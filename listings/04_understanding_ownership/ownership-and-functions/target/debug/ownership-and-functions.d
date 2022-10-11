@@ -1,0 +1,1 @@
+/home/zim/github/the_rust_book/listings/04_understanding_ownership/ownership-and-functions/target/debug/ownership-and-functions: /home/zim/github/the_rust_book/listings/04_understanding_ownership/ownership-and-functions/src/main.rs

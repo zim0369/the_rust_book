@@ -602,8 +602,6 @@ First word is: 5
 </ul>
 <!-- TODO: add zip() method here -->
 </details>
-<h2 id="if-let"><a class="header" href="#if-let">if let</a></h2>
-<!-- TODO -->
 <h2 id="match"><a class="header" href="#match">match</a></h2>
 <!-- TODO: Use "or(`|`)" inside match arms and every other possible thing -->
 <h2 id="exercises"><a class="header" href="#exercises">EXERCISES</a></h2>
@@ -839,21 +837,39 @@ And A partridge in a pear tree
 </li>
 <li>
 <p>Let's look at the ways variables and data interact</p>
+</li>
+</ul>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let s1 = String::from(&quot;hello&quot;);
     let s2 = s1;
 }
 </code></pre></pre>
-</li>
-<li>
-<p>This is how the memory representation looks like for:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let s1 = String::from(&quot;hello&quot;);
-<span class="boring">}
+<details>
+<summary>Output</summary>
+<pre><code class="language-console">   Compiling string-memory-representation v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/string-memory-representation)
+warning: unused variable: `s2`
+ --&gt; src/main.rs:6:9
+  |
+6 |     let s2 = s1;
+  |         ^^ help: if this is intentional, prefix it with an underscore: `_s2`
+  |
+  = note: `#[warn(unused_variables)]` on by default
+
+warning: `string-memory-representation` (bin &quot;string-memory-representation&quot;) generated 1 warning
+    Finished dev [unoptimized + debuginfo] target(s) in 0.56s
+     Running `target/debug/string-memory-representation`
+</code></pre>
+</details>
+<ul>
+<li>This is how the memory representation looks like for:</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span>    let s1 = String::from(&quot;hello&quot;);
+<span class="boring">    let s2 = s1;
+</span><span class="boring">}
 </span></code></pre></pre>
 <p><img src="images/04/s1_heap.png" alt="s1 points to data on heap" /></p>
-</li>
+<ul>
 <li>
 <p>This is how the memory representation would look like if you clone <code>s1</code> i.e.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -885,38 +901,70 @@ And A partridge in a pear tree
     println!(&quot;x = {}, y = {}&quot;, x, y);
 <span class="boring">}
 </span></code></pre></pre>
+<details>
+<summary>Output</summary>
+<pre><code class="language-console">   Compiling scalar-type-memory-representation v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/string-memory-representation/scalar-type-memory-representation)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.34s
+     Running `target/debug/scalar-type-memory-representation`
+x = 5, y = 5
+</code></pre>
+</details>
 <h2 id="ownership-and-functions"><a class="header" href="#ownership-and-functions">Ownership and Functions</a></h2>
 <p>The mechanics of passing a value to a function are similar to those when assigning a value to a variable.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let s1 = gives_ownership();         // gives_ownership moves its return
-                                        // value into s1
+    let s1 = gives_ownership(); // gives_ownership moves its return
+                                // value into s1
 
-    let s2 = String::from(&quot;hello&quot;);     // s2 comes into scope
+    let s2 = String::from(&quot;hello&quot;); // s2 comes into scope
 
-    let s3 = takes_and_gives_back(s2);  // s2 is moved into
-                                        // takes_and_gives_back, which also
-                                        // moves its return value into s3
+    let s3 = takes_and_gives_back(s2); // s2 is moved into
+                                       // takes_and_gives_back, which also
+                                       // moves its return value into s3
 } // Here, s3 goes out of scope and is dropped. s2 was moved, so nothing
   // happens. s1 goes out of scope and is dropped.
 
-fn gives_ownership() -&gt; String {             // gives_ownership will move its
-                                             // return value into the function
-                                             // that calls it
+fn gives_ownership() -&gt; String {
+    // gives_ownership will move its
+    // return value into the function
+    // that calls it
 
     let some_string = String::from(&quot;yours&quot;); // some_string comes into scope
 
-    some_string                              // some_string is returned and
-                                             // moves out to the calling
-                                             // function
+    some_string // some_string is returned and
+                // moves out to the calling
+                // function
 }
 
 // This function takes a String and returns one
-fn takes_and_gives_back(a_string: String) -&gt; String { // a_string comes into
-                                                      // scope
+fn takes_and_gives_back(a_string: String) -&gt; String {
+    // a_string comes into
+    // scope
 
-    a_string  // a_string is returned and moves out to the calling function
+    a_string // a_string is returned and moves out to the calling function
 }
 </code></pre></pre>
+<details>
+<summary>Output</summary>
+<pre><code class="language-console">   Compiling ownership-and-functions v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/ownership-and-functions)
+warning: unused variable: `s1`
+ --&gt; src/main.rs:2:9
+  |
+2 |     let s1 = gives_ownership(); // gives_ownership moves its return
+  |         ^^ help: if this is intentional, prefix it with an underscore: `_s1`
+  |
+  = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `s3`
+ --&gt; src/main.rs:7:9
+  |
+7 |     let s3 = takes_and_gives_back(s2); // s2 is moved into
+  |         ^^ help: if this is intentional, prefix it with an underscore: `_s3`
+
+warning: `ownership-and-functions` (bin &quot;ownership-and-functions&quot;) generated 2 warnings
+    Finished dev [unoptimized + debuginfo] target(s) in 0.47s
+     Running `target/debug/ownership-and-functions`
+</code></pre>
+</details>
 <h2 id="references-and-borrowing"><a class="header" href="#references-and-borrowing">References and Borrowing</a></h2>
 <ul>
 <li>All references are stored on the stack. Although you can store references on
@@ -932,11 +980,21 @@ reference to refer to anything on the heap.</li>
     println!(&quot;The length of '{}' is {}.&quot;, s1, len);
 }
 
-fn calculate_length(s: &amp;String) -&gt; usize { // s is a reference to a String
+fn calculate_length(s: &amp;String) -&gt; usize {
+    // s is a reference to a String
     s.len()
 } // Here, s goes out of scope. But because it does not have ownership of what
   // it refers to, it is not dropped.
+
 </code></pre></pre>
+<details>
+<summary>Output</summary>
+<pre><code class="language-console">   Compiling references-and-borrowing v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/references-and-borrowing)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.44s
+     Running `target/debug/references-and-borrowing`
+The length of 'hello' is 5.
+</code></pre>
+</details>
 <ul>
 <li>The memory representation for the above code looks like:</li>
 </ul>
@@ -955,18 +1013,18 @@ fn calculate_length(s: &amp;String) -&gt; usize { // s is a reference to a Strin
 <p>If you have a mutable reference to a value, you can have no other references to that value.</p>
 </li>
 </ul>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let mut s = String::from(&quot;hello&quot;);
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span>    let mut s = String::from(&quot;hello&quot;);
 
     let r1 = &amp;mut s;
     let r2 = &amp;mut s;
 
     println!(&quot;{}, {}&quot;, r1, r2);
-}
-</code></pre></pre>
-<p>Error:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
+<span class="boring">}
+</span></code></pre></pre>
+<details>
+<summary>Error</summary>
+<pre><code class="language-console">   Compiling references-and-borrowing-2 v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/references-and-borrowing-2)
 error[E0499]: cannot borrow `s` as mutable more than once at a time
  --&gt; src/main.rs:5:14
   |
@@ -979,8 +1037,9 @@ error[E0499]: cannot borrow `s` as mutable more than once at a time
   |                        -- first borrow later used here
 
 For more information about this error, try `rustc --explain E0499`.
-error: could not compile `ownership` due to previous error
+error: could not compile `references-and-borrowing-2` due to previous error
 </code></pre>
+</details>
 <p>The benefit of having this restriction is that Rust can prevent data races at compile time. A data race is similar to a race condition and happens when these three behaviors occur:</p>
 <ul>
 <li>Two or more pointers access the same data at the same time.</li>
@@ -988,50 +1047,73 @@ error: could not compile `ownership` due to previous error
 <li>There’s no mechanism being used to synchronize access to the data.</li>
 </ul>
 <p>As always, we can use curly brackets to create a new scope, allowing for multiple mutable references, just not simultaneous ones:</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let mut s = String::from(&quot;hello&quot;);
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span>    let mut s = String::from(&quot;hello&quot;);
 
     {
         let r1 = &amp;mut s;
     } // r1 goes out of scope here, so we can make a new reference with no problems.
 
     let r2 = &amp;mut s;
-}
-</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
+<details>
+<summary>Error</summary>
+<pre><code class="language-console">   Compiling references-and-borrowing-3 v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/references-and-borrowing-3)
+warning: unused variable: `r1`
+ --&gt; src/main.rs:6:13
+  |
+6 |         let r1 = &amp;mut s;
+  |             ^^ help: if this is intentional, prefix it with an underscore: `_r1`
+  |
+  = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `r2`
+ --&gt; src/main.rs:9:9
+  |
+9 |     let r2 = &amp;mut s;
+  |         ^^ help: if this is intentional, prefix it with an underscore: `_r2`
+
+warning: `references-and-borrowing-3` (bin &quot;references-and-borrowing-3&quot;) generated 2 warnings
+    Finished dev [unoptimized + debuginfo] target(s) in 0.58s
+     Running `target/debug/references-and-borrowing-3`
+</code></pre>
+</details>
 <p>Rust enforces a similar rule for combining mutable and immutable references.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let mut s = String::from(&quot;hello&quot;);
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span>    let mut s = String::from(&quot;hello&quot;);
 
     let r1 = &amp;s; // no problem
     let r2 = &amp;s; // no problem
     let r3 = &amp;mut s; // BIG PROBLEM
 
     println!(&quot;{}, {}, and {}&quot;, r1, r2, r3);
-}
-</code></pre></pre>
-<p>Error:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
+<span class="boring">}
+</span></code></pre></pre>
+<details>
+<summary>Error</summary>
+<pre><code class="language-console">   Compiling references-and-borrowing-4 v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/references-and-borrowing-4)
 error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
- --&gt; src/main.rs:6:14
+ --&gt; src/main.rs:7:14
   |
-4 |     let r1 = &amp;s; // no problem
+5 |     let r1 = &amp;s; // no problem
   |              -- immutable borrow occurs here
-5 |     let r2 = &amp;s; // no problem
-6 |     let r3 = &amp;mut s; // BIG PROBLEM
+6 |     let r2 = &amp;s; // no problem
+7 |     let r3 = &amp;mut s; // BIG PROBLEM
   |              ^^^^^^ mutable borrow occurs here
-7 |
-8 |     println!(&quot;{}, {}, and {}&quot;, r1, r2, r3);
+8 |
+9 |     println!(&quot;{}, {}, and {}&quot;, r1, r2, r3);
   |                                -- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
-error: could not compile `ownership` due to previous error
+error: could not compile `references-and-borrowing-4` due to previous error
 </code></pre>
+</details>
 <p>Whew! We also cannot have a mutable reference while we have an immutable one to the same value.</p>
 <p>Users of an immutable reference don’t expect the value to suddenly change out from under them! However, multiple immutable references are allowed because no one who is just reading the data has the ability to affect anyone else’s reading of the data.</p>
 <p>Note that a reference’s scope starts from where it is introduced and continues through the last time that reference is used. So this code compiles:</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let mut s = String::from(&quot;hello&quot;);
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span>    let mut s = String::from(&quot;hello&quot;);
 
     let r1 = &amp;s; // no problem
     let r2 = &amp;s; // no problem
@@ -1040,8 +1122,17 @@ error: could not compile `ownership` due to previous error
 
     let r3 = &amp;mut s; // no problem
     println!(&quot;{}&quot;, r3);
-}
-</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
+<details>
+<summary>Output</summary>
+<pre><code class="language-console">   Compiling references-and-borrowing-5 v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/references-and-borrowing-5)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.43s
+     Running `target/debug/references-and-borrowing-5`
+hello and hello
+hello
+</code></pre>
+</details>
 <h2 id="dangling-references"><a class="header" href="#dangling-references">Dangling References</a></h2>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let reference_to_nothing = dangle();
@@ -1055,29 +1146,27 @@ fn dangle() -&gt; &amp;String { // dangle returns a reference to a String
 } // Here, s goes out of scope, and is dropped. Its memory goes away.
   // Danger!
 </code></pre></pre>
-<p>Error:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
+<details>
+<summary>Error</summary>
+<pre><code class="language-console">   Compiling dangling-references v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/dangling-references)
 error[E0106]: missing lifetime specifier
- --&gt; src/main.rs:5:16
+ --&gt; src/main.rs:6:16
   |
-5 | fn dangle() -&gt; &amp;String {
+6 | fn dangle() -&gt; &amp;String { // dangle returns a reference to a String
   |                ^ expected named lifetime parameter
   |
   = help: this function's return type contains a borrowed value, but there is no value for it to be borrowed from
 help: consider using the `'static` lifetime
   |
-5 | fn dangle() -&gt; &amp;'static String {
-  |                ~~~~~~~~
+6 | fn dangle() -&gt; &amp;'static String { // dangle returns a reference to a String
+  |                 +++++++
 
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `ownership` due to previous error
-
+error: could not compile `dangling-references` due to previous error
 </code></pre>
-<p>More specifically:</p>
-<pre><code class="language-console">this function's return type contains a borrowed value, but there is no value
-for it to be borrowed from
-</code></pre>
+</details>
+<p>Specifically:</p>
+<p><mark>this function's return type contains a borrowed value, but there is no value for it to be borrowed from</mark></p>
 <h2 id="slice-type-different-kind-of-references"><a class="header" href="#slice-type-different-kind-of-references">Slice Type: Different kind of references</a></h2>
 <p>Let's write a program to output the first word of a string:</p>
 <pre><pre class="playground"><code class="language-rust">fn first_word(s: &amp;String) -&gt; usize {
@@ -1634,24 +1723,305 @@ error: could not compile `l02-structs-lifetimes` due to 2 previous errors
 <ul>
 <li>First parameter is always self, which represents the instance of the struct the method is being called on.</li>
 </ul>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>{{#rustdoc_include ../listings/05_using_structs_to_structure_related_data/l03-method-syntax/main.rs:all}}
-<span class="boring">}
-</span></code></pre></pre>
-<p>The compiler will complain that it needs lifetime specifiers:</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&amp;self) -&gt; u32 {
+        self.width * self.height
+    }
+
+    fn width(&amp;self) -&gt; bool {
+        self.width &gt; 0
+    }
+
+    fn can_hold(&amp;self, other: &amp;Rectangle) -&gt; bool {
+        other.width &lt; self.width &amp;&amp; other.height &lt; self.height
+    }
+}
+
+impl Rectangle {
+    // Associated function
+    fn square(size: u32) -&gt; Rectangle {
+        Rectangle {
+            height: size,
+            width: size,
+        }
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    let rect2 = Rectangle { ..rect1 };
+
+    println!(
+        &quot;The area of the rectangle is {} square pixels.&quot;,
+        rect1.area()
+    );
+
+    if rect1.width() {
+        dbg!(rect1.width);
+    }
+
+    dbg!(rect1.can_hold(&amp;rect2));
+
+    dbg!(Rectangle::square(5));
+}
+</code></pre></pre>
 <details>
-<summary>Error</summary>
-<pre><code class="language-console">{{#include ../listings/05_using_structs_to_structure_related_data/l03-method-syntax/output.txt}}
+<summary>Output</summary>
+<pre><code class="language-console">   Compiling l03-method-syntax v0.1.0 (/home/zim/github/the_rust_book/listings/05_using_structs_to_structure_related_data/l03-method-syntax)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.28s
+     Running `target/debug/l03-method-syntax`
+The area of the rectangle is 1500 square pixels.
+[src/main.rs:33] rect1.width = 30
 </code></pre>
 </details>
 <ul>
 <li>
-<p>In the signature for area, we use &amp;self instead of rectangle: &amp;Rectangle. The &amp;self is actually short for self: &amp;Self. Within an impl block, the type Self is an alias for the type that the impl block is for. Methods must have a parameter named self of type Self for their first parameter, so Rust lets you abbreviate this with only the name self in the first parameter spot. Note that we still need to use the &amp; in front of the self shorthand to indicate this method borrows the Self instance, just as we did in rectangle: &amp;Rectangle. Methods can take ownership of self, borrow self immutably as we’ve done here, or borrow self mutably, just as they can any other parameter.</p>
+<p>In the signature for area, we use <code>&amp;self</code> instead of rectangle: <code>&amp;Rectangle</code>. The <code>&amp;self</code> is actually short for self: <code>&amp;Self.</code> Within an <code>impl</code> block, the type Self is an alias for the type that the <code>impl</code> block is for. Methods must have a parameter named self of type Self for their first parameter, so Rust lets you abbreviate this with only the name self in the first parameter spot. Note that we still need to use the &amp; in front of the self shorthand to indicate this method borrows the Self instance, just as we did in rectangle: <code>&amp;Rectangle</code> Methods can take ownership of self, borrow self immutably as we’ve done here, or borrow self mutably, just as they can any other parameter.</p>
 </li>
 <li>
-<p>If we wanted to change the instance that we’ve called the method on as part of what the method does, we’d use &amp;mut self as the first parameter. Having a method that takes ownership of the instance by using just self as the first parameter is rare; this technique is usually used when the method transforms self into something else and you want to prevent the caller from using the original instance after the transformation.</p>
+<p>If we wanted to change the instance that we’ve called the method on as part of what the method does, we’d use <code>&amp;mut</code> self as the first parameter. Having a method that takes ownership of the instance by using just self as the first parameter is rare; this technique is usually used when the method transforms self into something else and you want to prevent the caller from using the original instance after the transformation.</p>
 </li>
+<li>
+<p>We can use the same name for the method &amp; struct field.</p>
+</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
+</span><span class="boring">struct Rectangle {
+</span><span class="boring">    width: u32,
+</span><span class="boring">    height: u32,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Rectangle {
+</span><span class="boring">    fn area(&amp;self) -&gt; u32 {
+</span><span class="boring">        self.width * self.height
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    fn width(&amp;self) -&gt; bool {
+        self.width &gt; 0
+    }
+<span class="boring">
+</span><span class="boring">    fn can_hold(&amp;self, other: &amp;Rectangle) -&gt; bool {
+</span><span class="boring">        other.width &lt; self.width &amp;&amp; other.height &lt; self.height
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Rectangle {
+</span><span class="boring">    // Associated function
+</span><span class="boring">    fn square(size: u32) -&gt; Rectangle {
+</span><span class="boring">        Rectangle {
+</span><span class="boring">            height: size,
+</span><span class="boring">            width: size,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let rect1 = Rectangle {
+</span><span class="boring">        width: 30,
+</span><span class="boring">        height: 50,
+</span><span class="boring">    };
+</span><span class="boring">
+</span><span class="boring">    let rect2 = Rectangle { ..rect1 };
+</span><span class="boring">
+</span><span class="boring">    println!(
+</span><span class="boring">        &quot;The area of the rectangle is {} square pixels.&quot;,
+</span><span class="boring">        rect1.area()
+</span><span class="boring">    );
+</span><span class="boring">
+</span><span class="boring">    if rect1.width() {
+</span><span class="boring">        dbg!(rect1.width);
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    dbg!(rect1.can_hold(&amp;rect2));
+</span><span class="boring">
+</span><span class="boring">    dbg!(Rectangle::square(5));
+</span><span class="boring">}
+</span></code></pre></pre>
+<ul>
+<li>Call method with <code>.width()</code> and field with just <code>.width</code></li>
+</ul>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
+</span><span class="boring">struct Rectangle {
+</span><span class="boring">    width: u32,
+</span><span class="boring">    height: u32,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Rectangle {
+</span><span class="boring">    fn area(&amp;self) -&gt; u32 {
+</span><span class="boring">        self.width * self.height
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn width(&amp;self) -&gt; bool {
+</span><span class="boring">        self.width &gt; 0
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn can_hold(&amp;self, other: &amp;Rectangle) -&gt; bool {
+</span><span class="boring">        other.width &lt; self.width &amp;&amp; other.height &lt; self.height
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Rectangle {
+</span><span class="boring">    // Associated function
+</span><span class="boring">    fn square(size: u32) -&gt; Rectangle {
+</span><span class="boring">        Rectangle {
+</span><span class="boring">            height: size,
+</span><span class="boring">            width: size,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let rect1 = Rectangle {
+</span><span class="boring">        width: 30,
+</span><span class="boring">        height: 50,
+</span><span class="boring">    };
+</span><span class="boring">
+</span><span class="boring">    let rect2 = Rectangle { ..rect1 };
+</span><span class="boring">
+</span><span class="boring">    println!(
+</span><span class="boring">        &quot;The area of the rectangle is {} square pixels.&quot;,
+</span><span class="boring">        rect1.area()
+</span><span class="boring">    );
+</span><span class="boring">
+</span>    if rect1.width() {
+        dbg!(rect1.width);
+    }
+<span class="boring">
+</span><span class="boring">    dbg!(rect1.can_hold(&amp;rect2));
+</span><span class="boring">
+</span><span class="boring">    dbg!(Rectangle::square(5));
+</span><span class="boring">}
+</span></code></pre></pre>
+<ul>
+<li>
+<p>In C and C++, two different operators are used for calling methods. If <code>object</code> is a pointer, <code>object-&gt;something()</code> is similar to <code>(*object).something()</code>.</p>
+</li>
+<li>
+<p>Rust doesn’t have an equivalent to the -&gt; operator; instead, Rust has a feature called automatic referencing and dereferencing. Calling methods is one of the few places in Rust that has this behavior.</p>
+</li>
+<li>
+<p>Associated functions that aren’t methods are often used for constructors that will return a new instance of the struct.</p>
+</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
+</span><span class="boring">struct Rectangle {
+</span><span class="boring">    width: u32,
+</span><span class="boring">    height: u32,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Rectangle {
+</span><span class="boring">    fn area(&amp;self) -&gt; u32 {
+</span><span class="boring">        self.width * self.height
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn width(&amp;self) -&gt; bool {
+</span><span class="boring">        self.width &gt; 0
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn can_hold(&amp;self, other: &amp;Rectangle) -&gt; bool {
+</span><span class="boring">        other.width &lt; self.width &amp;&amp; other.height &lt; self.height
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Rectangle {
+    // Associated function
+    fn square(size: u32) -&gt; Rectangle {
+        Rectangle {
+            height: size,
+            width: size,
+        }
+    }
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let rect1 = Rectangle {
+</span><span class="boring">        width: 30,
+</span><span class="boring">        height: 50,
+</span><span class="boring">    };
+</span><span class="boring">
+</span><span class="boring">    let rect2 = Rectangle { ..rect1 };
+</span><span class="boring">
+</span><span class="boring">    println!(
+</span><span class="boring">        &quot;The area of the rectangle is {} square pixels.&quot;,
+</span><span class="boring">        rect1.area()
+</span><span class="boring">    );
+</span><span class="boring">
+</span><span class="boring">    if rect1.width() {
+</span><span class="boring">        dbg!(rect1.width);
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    dbg!(rect1.can_hold(&amp;rect2));
+</span><span class="boring">
+</span><span class="boring">    dbg!(Rectangle::square(5));
+</span><span class="boring">}
+</span></code></pre></pre>
+<ul>
+<li>Called with <code>::</code> syntax</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
+</span><span class="boring">struct Rectangle {
+</span><span class="boring">    width: u32,
+</span><span class="boring">    height: u32,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Rectangle {
+</span><span class="boring">    fn area(&amp;self) -&gt; u32 {
+</span><span class="boring">        self.width * self.height
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn width(&amp;self) -&gt; bool {
+</span><span class="boring">        self.width &gt; 0
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn can_hold(&amp;self, other: &amp;Rectangle) -&gt; bool {
+</span><span class="boring">        other.width &lt; self.width &amp;&amp; other.height &lt; self.height
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Rectangle {
+</span><span class="boring">    // Associated function
+</span><span class="boring">    fn square(size: u32) -&gt; Rectangle {
+</span><span class="boring">        Rectangle {
+</span><span class="boring">            height: size,
+</span><span class="boring">            width: size,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let rect1 = Rectangle {
+</span><span class="boring">        width: 30,
+</span><span class="boring">        height: 50,
+</span><span class="boring">    };
+</span><span class="boring">
+</span><span class="boring">    let rect2 = Rectangle { ..rect1 };
+</span><span class="boring">
+</span><span class="boring">    println!(
+</span><span class="boring">        &quot;The area of the rectangle is {} square pixels.&quot;,
+</span><span class="boring">        rect1.area()
+</span><span class="boring">    );
+</span><span class="boring">
+</span><span class="boring">    if rect1.width() {
+</span><span class="boring">        dbg!(rect1.width);
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    dbg!(rect1.can_hold(&amp;rect2));
+</span><span class="boring">
+</span>    dbg!(Rectangle::square(5));
+<span class="boring">}
+</span></code></pre></pre>
+<ul>
+<li>We can have our associated function in it's own impl block. Each struct is allowed to have multiple impl blocks. There’s no reason to separate these methods into multiple impl blocks here, but this is valid syntax.</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="enums-and-pattern-matching"><a class="header" href="#enums-and-pattern-matching">Enums And Pattern Matching</a></h1>
 <pre><pre class="playground"><code class="language-rust">
@@ -1711,6 +2081,8 @@ fn main() {
 }
 </code></pre>
 </details>
+<h2 id="if-let"><a class="header" href="#if-let">if let</a></h2>
+<!-- TODO -->
 <div style="break-before: page; page-break-before: always;"></div><h1 id="managing-growing-projects-with-packages-crates-and-modules"><a class="header" href="#managing-growing-projects-with-packages-crates-and-modules">Managing Growing Projects With Packages Crates And Modules</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="common-collections"><a class="header" href="#common-collections">Common Collections</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="error-handling"><a class="header" href="#error-handling">Error Handling</a></h1>

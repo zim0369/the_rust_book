@@ -1,0 +1,18 @@
+   Compiling references-and-borrowing-3 v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/references-and-borrowing-3)
+warning: unused variable: `r1`
+ --> src/main.rs:6:13
+  |
+6 |         let r1 = &mut s;
+  |             ^^ help: if this is intentional, prefix it with an underscore: `_r1`
+  |
+  = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `r2`
+ --> src/main.rs:9:9
+  |
+9 |     let r2 = &mut s;
+  |         ^^ help: if this is intentional, prefix it with an underscore: `_r2`
+
+warning: `references-and-borrowing-3` (bin "references-and-borrowing-3") generated 2 warnings
+    Finished dev [unoptimized + debuginfo] target(s) in 0.58s
+     Running `target/debug/references-and-borrowing-3`

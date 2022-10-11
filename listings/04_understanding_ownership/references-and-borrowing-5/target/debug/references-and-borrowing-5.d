@@ -1,0 +1,1 @@
+/home/zim/github/the_rust_book/listings/04_understanding_ownership/references-and-borrowing-5/target/debug/references-and-borrowing-5: /home/zim/github/the_rust_book/listings/04_understanding_ownership/references-and-borrowing-5/src/main.rs

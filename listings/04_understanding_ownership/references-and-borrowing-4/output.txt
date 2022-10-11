@@ -1,0 +1,15 @@
+   Compiling references-and-borrowing-4 v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/references-and-borrowing-4)
+error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
+ --> src/main.rs:7:14
+  |
+5 |     let r1 = &s; // no problem
+  |              -- immutable borrow occurs here
+6 |     let r2 = &s; // no problem
+7 |     let r3 = &mut s; // BIG PROBLEM
+  |              ^^^^^^ mutable borrow occurs here
+8 |
+9 |     println!("{}, {}, and {}", r1, r2, r3);
+  |                                -- immutable borrow later used here
+
+For more information about this error, try `rustc --explain E0502`.
+error: could not compile `references-and-borrowing-4` due to previous error

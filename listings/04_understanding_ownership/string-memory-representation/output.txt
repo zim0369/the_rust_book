@@ -1,0 +1,12 @@
+   Compiling string-memory-representation v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/string-memory-representation)
+warning: unused variable: `s2`
+ --> src/main.rs:6:9
+  |
+6 |     let s2 = s1;
+  |         ^^ help: if this is intentional, prefix it with an underscore: `_s2`
+  |
+  = note: `#[warn(unused_variables)]` on by default
+
+warning: `string-memory-representation` (bin "string-memory-representation") generated 1 warning
+    Finished dev [unoptimized + debuginfo] target(s) in 0.56s
+     Running `target/debug/string-memory-representation`

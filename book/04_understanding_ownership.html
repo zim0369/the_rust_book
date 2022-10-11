@@ -167,21 +167,39 @@
 </li>
 <li>
 <p>Let's look at the ways variables and data interact</p>
+</li>
+</ul>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let s1 = String::from(&quot;hello&quot;);
     let s2 = s1;
 }
 </code></pre></pre>
-</li>
-<li>
-<p>This is how the memory representation looks like for:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let s1 = String::from(&quot;hello&quot;);
-<span class="boring">}
+<details>
+<summary>Output</summary>
+<pre><code class="language-console">   Compiling string-memory-representation v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/string-memory-representation)
+warning: unused variable: `s2`
+ --&gt; src/main.rs:6:9
+  |
+6 |     let s2 = s1;
+  |         ^^ help: if this is intentional, prefix it with an underscore: `_s2`
+  |
+  = note: `#[warn(unused_variables)]` on by default
+
+warning: `string-memory-representation` (bin &quot;string-memory-representation&quot;) generated 1 warning
+    Finished dev [unoptimized + debuginfo] target(s) in 0.56s
+     Running `target/debug/string-memory-representation`
+</code></pre>
+</details>
+<ul>
+<li>This is how the memory representation looks like for:</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span>    let s1 = String::from(&quot;hello&quot;);
+<span class="boring">    let s2 = s1;
+</span><span class="boring">}
 </span></code></pre></pre>
 <p><img src="images/04/s1_heap.png" alt="s1 points to data on heap" /></p>
-</li>
+<ul>
 <li>
 <p>This is how the memory representation would look like if you clone <code>s1</code> i.e.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -213,38 +231,70 @@
     println!(&quot;x = {}, y = {}&quot;, x, y);
 <span class="boring">}
 </span></code></pre></pre>
+<details>
+<summary>Output</summary>
+<pre><code class="language-console">   Compiling scalar-type-memory-representation v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/string-memory-representation/scalar-type-memory-representation)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.34s
+     Running `target/debug/scalar-type-memory-representation`
+x = 5, y = 5
+</code></pre>
+</details>
 <h2 id="ownership-and-functions"><a class="header" href="#ownership-and-functions">Ownership and Functions</a></h2>
 <p>The mechanics of passing a value to a function are similar to those when assigning a value to a variable.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let s1 = gives_ownership();         // gives_ownership moves its return
-                                        // value into s1
+    let s1 = gives_ownership(); // gives_ownership moves its return
+                                // value into s1
 
-    let s2 = String::from(&quot;hello&quot;);     // s2 comes into scope
+    let s2 = String::from(&quot;hello&quot;); // s2 comes into scope
 
-    let s3 = takes_and_gives_back(s2);  // s2 is moved into
-                                        // takes_and_gives_back, which also
-                                        // moves its return value into s3
+    let s3 = takes_and_gives_back(s2); // s2 is moved into
+                                       // takes_and_gives_back, which also
+                                       // moves its return value into s3
 } // Here, s3 goes out of scope and is dropped. s2 was moved, so nothing
   // happens. s1 goes out of scope and is dropped.
 
-fn gives_ownership() -&gt; String {             // gives_ownership will move its
-                                             // return value into the function
-                                             // that calls it
+fn gives_ownership() -&gt; String {
+    // gives_ownership will move its
+    // return value into the function
+    // that calls it
 
     let some_string = String::from(&quot;yours&quot;); // some_string comes into scope
 
-    some_string                              // some_string is returned and
-                                             // moves out to the calling
-                                             // function
+    some_string // some_string is returned and
+                // moves out to the calling
+                // function
 }
 
 // This function takes a String and returns one
-fn takes_and_gives_back(a_string: String) -&gt; String { // a_string comes into
-                                                      // scope
+fn takes_and_gives_back(a_string: String) -&gt; String {
+    // a_string comes into
+    // scope
 
-    a_string  // a_string is returned and moves out to the calling function
+    a_string // a_string is returned and moves out to the calling function
 }
 </code></pre></pre>
+<details>
+<summary>Output</summary>
+<pre><code class="language-console">   Compiling ownership-and-functions v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/ownership-and-functions)
+warning: unused variable: `s1`
+ --&gt; src/main.rs:2:9
+  |
+2 |     let s1 = gives_ownership(); // gives_ownership moves its return
+  |         ^^ help: if this is intentional, prefix it with an underscore: `_s1`
+  |
+  = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `s3`
+ --&gt; src/main.rs:7:9
+  |
+7 |     let s3 = takes_and_gives_back(s2); // s2 is moved into
+  |         ^^ help: if this is intentional, prefix it with an underscore: `_s3`
+
+warning: `ownership-and-functions` (bin &quot;ownership-and-functions&quot;) generated 2 warnings
+    Finished dev [unoptimized + debuginfo] target(s) in 0.47s
+     Running `target/debug/ownership-and-functions`
+</code></pre>
+</details>
 <h2 id="references-and-borrowing"><a class="header" href="#references-and-borrowing">References and Borrowing</a></h2>
 <ul>
 <li>All references are stored on the stack. Although you can store references on
@@ -260,11 +310,21 @@ reference to refer to anything on the heap.</li>
     println!(&quot;The length of '{}' is {}.&quot;, s1, len);
 }
 
-fn calculate_length(s: &amp;String) -&gt; usize { // s is a reference to a String
+fn calculate_length(s: &amp;String) -&gt; usize {
+    // s is a reference to a String
     s.len()
 } // Here, s goes out of scope. But because it does not have ownership of what
   // it refers to, it is not dropped.
+
 </code></pre></pre>
+<details>
+<summary>Output</summary>
+<pre><code class="language-console">   Compiling references-and-borrowing v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/references-and-borrowing)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.44s
+     Running `target/debug/references-and-borrowing`
+The length of 'hello' is 5.
+</code></pre>
+</details>
 <ul>
 <li>The memory representation for the above code looks like:</li>
 </ul>
@@ -283,18 +343,18 @@ fn calculate_length(s: &amp;String) -&gt; usize { // s is a reference to a Strin
 <p>If you have a mutable reference to a value, you can have no other references to that value.</p>
 </li>
 </ul>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let mut s = String::from(&quot;hello&quot;);
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span>    let mut s = String::from(&quot;hello&quot;);
 
     let r1 = &amp;mut s;
     let r2 = &amp;mut s;
 
     println!(&quot;{}, {}&quot;, r1, r2);
-}
-</code></pre></pre>
-<p>Error:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
+<span class="boring">}
+</span></code></pre></pre>
+<details>
+<summary>Error</summary>
+<pre><code class="language-console">   Compiling references-and-borrowing-2 v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/references-and-borrowing-2)
 error[E0499]: cannot borrow `s` as mutable more than once at a time
  --&gt; src/main.rs:5:14
   |
@@ -307,8 +367,9 @@ error[E0499]: cannot borrow `s` as mutable more than once at a time
   |                        -- first borrow later used here
 
 For more information about this error, try `rustc --explain E0499`.
-error: could not compile `ownership` due to previous error
+error: could not compile `references-and-borrowing-2` due to previous error
 </code></pre>
+</details>
 <p>The benefit of having this restriction is that Rust can prevent data races at compile time. A data race is similar to a race condition and happens when these three behaviors occur:</p>
 <ul>
 <li>Two or more pointers access the same data at the same time.</li>
@@ -316,50 +377,73 @@ error: could not compile `ownership` due to previous error
 <li>There’s no mechanism being used to synchronize access to the data.</li>
 </ul>
 <p>As always, we can use curly brackets to create a new scope, allowing for multiple mutable references, just not simultaneous ones:</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let mut s = String::from(&quot;hello&quot;);
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span>    let mut s = String::from(&quot;hello&quot;);
 
     {
         let r1 = &amp;mut s;
     } // r1 goes out of scope here, so we can make a new reference with no problems.
 
     let r2 = &amp;mut s;
-}
-</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
+<details>
+<summary>Error</summary>
+<pre><code class="language-console">   Compiling references-and-borrowing-3 v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/references-and-borrowing-3)
+warning: unused variable: `r1`
+ --&gt; src/main.rs:6:13
+  |
+6 |         let r1 = &amp;mut s;
+  |             ^^ help: if this is intentional, prefix it with an underscore: `_r1`
+  |
+  = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `r2`
+ --&gt; src/main.rs:9:9
+  |
+9 |     let r2 = &amp;mut s;
+  |         ^^ help: if this is intentional, prefix it with an underscore: `_r2`
+
+warning: `references-and-borrowing-3` (bin &quot;references-and-borrowing-3&quot;) generated 2 warnings
+    Finished dev [unoptimized + debuginfo] target(s) in 0.58s
+     Running `target/debug/references-and-borrowing-3`
+</code></pre>
+</details>
 <p>Rust enforces a similar rule for combining mutable and immutable references.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let mut s = String::from(&quot;hello&quot;);
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span>    let mut s = String::from(&quot;hello&quot;);
 
     let r1 = &amp;s; // no problem
     let r2 = &amp;s; // no problem
     let r3 = &amp;mut s; // BIG PROBLEM
 
     println!(&quot;{}, {}, and {}&quot;, r1, r2, r3);
-}
-</code></pre></pre>
-<p>Error:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
+<span class="boring">}
+</span></code></pre></pre>
+<details>
+<summary>Error</summary>
+<pre><code class="language-console">   Compiling references-and-borrowing-4 v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/references-and-borrowing-4)
 error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
- --&gt; src/main.rs:6:14
+ --&gt; src/main.rs:7:14
   |
-4 |     let r1 = &amp;s; // no problem
+5 |     let r1 = &amp;s; // no problem
   |              -- immutable borrow occurs here
-5 |     let r2 = &amp;s; // no problem
-6 |     let r3 = &amp;mut s; // BIG PROBLEM
+6 |     let r2 = &amp;s; // no problem
+7 |     let r3 = &amp;mut s; // BIG PROBLEM
   |              ^^^^^^ mutable borrow occurs here
-7 |
-8 |     println!(&quot;{}, {}, and {}&quot;, r1, r2, r3);
+8 |
+9 |     println!(&quot;{}, {}, and {}&quot;, r1, r2, r3);
   |                                -- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
-error: could not compile `ownership` due to previous error
+error: could not compile `references-and-borrowing-4` due to previous error
 </code></pre>
+</details>
 <p>Whew! We also cannot have a mutable reference while we have an immutable one to the same value.</p>
 <p>Users of an immutable reference don’t expect the value to suddenly change out from under them! However, multiple immutable references are allowed because no one who is just reading the data has the ability to affect anyone else’s reading of the data.</p>
 <p>Note that a reference’s scope starts from where it is introduced and continues through the last time that reference is used. So this code compiles:</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let mut s = String::from(&quot;hello&quot;);
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span>    let mut s = String::from(&quot;hello&quot;);
 
     let r1 = &amp;s; // no problem
     let r2 = &amp;s; // no problem
@@ -368,8 +452,17 @@ error: could not compile `ownership` due to previous error
 
     let r3 = &amp;mut s; // no problem
     println!(&quot;{}&quot;, r3);
-}
-</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
+<details>
+<summary>Output</summary>
+<pre><code class="language-console">   Compiling references-and-borrowing-5 v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/references-and-borrowing-5)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.43s
+     Running `target/debug/references-and-borrowing-5`
+hello and hello
+hello
+</code></pre>
+</details>
 <h2 id="dangling-references"><a class="header" href="#dangling-references">Dangling References</a></h2>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let reference_to_nothing = dangle();
@@ -383,29 +476,27 @@ fn dangle() -&gt; &amp;String { // dangle returns a reference to a String
 } // Here, s goes out of scope, and is dropped. Its memory goes away.
   // Danger!
 </code></pre></pre>
-<p>Error:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
+<details>
+<summary>Error</summary>
+<pre><code class="language-console">   Compiling dangling-references v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/dangling-references)
 error[E0106]: missing lifetime specifier
- --&gt; src/main.rs:5:16
+ --&gt; src/main.rs:6:16
   |
-5 | fn dangle() -&gt; &amp;String {
+6 | fn dangle() -&gt; &amp;String { // dangle returns a reference to a String
   |                ^ expected named lifetime parameter
   |
   = help: this function's return type contains a borrowed value, but there is no value for it to be borrowed from
 help: consider using the `'static` lifetime
   |
-5 | fn dangle() -&gt; &amp;'static String {
-  |                ~~~~~~~~
+6 | fn dangle() -&gt; &amp;'static String { // dangle returns a reference to a String
+  |                 +++++++
 
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `ownership` due to previous error
-
+error: could not compile `dangling-references` due to previous error
 </code></pre>
-<p>More specifically:</p>
-<pre><code class="language-console">this function's return type contains a borrowed value, but there is no value
-for it to be borrowed from
-</code></pre>
+</details>
+<p>Specifically:</p>
+<p><mark>this function's return type contains a borrowed value, but there is no value for it to be borrowed from</mark></p>
 <h2 id="slice-type-different-kind-of-references"><a class="header" href="#slice-type-different-kind-of-references">Slice Type: Different kind of references</a></h2>
 <p>Let's write a program to output the first word of a string:</p>
 <pre><pre class="playground"><code class="language-rust">fn first_word(s: &amp;String) -&gt; usize {

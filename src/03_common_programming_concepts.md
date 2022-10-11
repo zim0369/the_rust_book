@@ -226,10 +226,6 @@ In the code below:
 
 </details>
 
-## if let
-
-<!-- TODO -->
-
 ## match
 
 <!-- TODO: Use "or(`|`)" inside match arms and every other possible thing -->

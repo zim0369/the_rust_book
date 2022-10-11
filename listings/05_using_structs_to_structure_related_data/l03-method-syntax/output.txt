@@ -1,0 +1,5 @@
+   Compiling l03-method-syntax v0.1.0 (/home/zim/github/the_rust_book/listings/05_using_structs_to_structure_related_data/l03-method-syntax)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.28s
+     Running `target/debug/l03-method-syntax`
+The area of the rectangle is 1500 square pixels.
+[src/main.rs:33] rect1.width = 30

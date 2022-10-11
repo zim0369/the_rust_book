@@ -1,0 +1,1 @@
+/home/zim/github/the_rust_book/listings/04_understanding_ownership/string-memory-representation/scalar-type-memory-representation/target/debug/scalar-type-memory-representation: /home/zim/github/the_rust_book/listings/04_understanding_ownership/string-memory-representation/scalar-type-memory-representation/src/main.rs

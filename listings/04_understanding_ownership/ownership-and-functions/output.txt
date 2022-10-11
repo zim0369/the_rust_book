@@ -1,0 +1,18 @@
+   Compiling ownership-and-functions v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/ownership-and-functions)
+warning: unused variable: `s1`
+ --> src/main.rs:2:9
+  |
+2 |     let s1 = gives_ownership(); // gives_ownership moves its return
+  |         ^^ help: if this is intentional, prefix it with an underscore: `_s1`
+  |
+  = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `s3`
+ --> src/main.rs:7:9
+  |
+7 |     let s3 = takes_and_gives_back(s2); // s2 is moved into
+  |         ^^ help: if this is intentional, prefix it with an underscore: `_s3`
+
+warning: `ownership-and-functions` (bin "ownership-and-functions") generated 2 warnings
+    Finished dev [unoptimized + debuginfo] target(s) in 0.47s
+     Running `target/debug/ownership-and-functions`

@@ -1,0 +1,4 @@
+   Compiling scalar-type-memory-representation v0.1.0 (/home/zim/github/the_rust_book/listings/04_understanding_ownership/string-memory-representation/scalar-type-memory-representation)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.34s
+     Running `target/debug/scalar-type-memory-representation`
+x = 5, y = 5

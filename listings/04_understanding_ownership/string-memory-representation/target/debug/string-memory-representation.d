@@ -1,0 +1,1 @@
+/home/zim/github/the_rust_book/listings/04_understanding_ownership/string-memory-representation/target/debug/string-memory-representation: /home/zim/github/the_rust_book/listings/04_understanding_ownership/string-memory-representation/src/main.rs
