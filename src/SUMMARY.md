@@ -1,5 +1,7 @@
 # Summary
 
+*   [introduction                                              ](./introduction.md)
+*   [Quick Look                                                ](./quick_look.md)
 *   [Getting Started                                           ](./01_getting_started.md)
 *   [Programming A Guessing Game                               ](./02_programming_a_guessing_game.md)
 *   [Common Programming Concepts                               ](./03_common_programming_concepts.md)

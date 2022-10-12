@@ -1,0 +1,3 @@
+    Finished dev [unoptimized + debuginfo] target(s) in 0.00s
+     Running `target/debug/if-let`
+Yay!
